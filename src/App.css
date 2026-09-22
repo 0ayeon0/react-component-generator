@@ -537,6 +537,13 @@
   line-height: 1.5;
 }
 
+.prompt-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
 .results-section {
   min-height: 360px;
 }
