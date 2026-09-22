@@ -42,4 +42,19 @@ describe('PromptInput', () => {
 
     expect(screen.getByText('프롬프트는 500자를 넘을 수 없습니다. (현재 501자)')).toBeInTheDocument();
   });
+
+  it('history가 비어 있으면 최근 프롬프트 영역을 보여주지 않는다', () => {
+    render(<PromptInput onGenerate={vi.fn()} isLoading={false} history={[]} />);
+    expect(screen.queryByText('최근 프롬프트')).not.toBeInTheDocument();
+  });
+
+  it('history가 있으면 항목을 보여주고 클릭하면 입력창에 채워진다', async () => {
+    const user = userEvent.setup();
+    render(<PromptInput onGenerate={vi.fn()} isLoading={false} history={['이전 프롬프트']} />);
+
+    expect(screen.getByText('최근 프롬프트')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: '이전 프롬프트' }));
+
+    expect(screen.getByRole('textbox')).toHaveValue('이전 프롬프트');
+  });
 });
